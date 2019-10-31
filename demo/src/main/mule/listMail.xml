@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<email:pop3-config name="Email_POP3" doc:name="Email POP3" doc:id="5cdb555c-712c-43e0-bc22-84c56bf3ef05" >
+		<email:pop3-connection host="pop.gmail.com" port="995" user="minhduck61uet@gmail.com" password="minhduc20121998" >
+			<email:properties >
+				<email:property key="mail.pop3.ssl.enable" value="true" />
+			</email:properties>
+		</email:pop3-connection>
+	</email:pop3-config>
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="3a70e46a-6da8-48fe-9470-a381ad6c7eda" >
+		<tls:trust-store insecure="true" />
+	</tls:context>
+	<flow name="listMailFlow" doc:id="b801f676-b5e7-4617-894b-2e795bddd8ad" >
+		<http:listener doc:name="Listener" doc:id="26267fb4-5125-4176-af7d-7883913e9e63" config-ref="HTTP_Listener_config" path="/listmail"/>
+		<email:list-pop3 doc:name="List - POP3" doc:id="93a78bbd-6b7d-4a63-a042-d809a47988a2" config-ref="Email_POP3"/>
+		<foreach doc:name="For Each" doc:id="b91ad7fe-20cd-4d27-9607-8d4c39cfa725" >
+			<set-variable value="#[payload.body] " doc:name="Set Variable" doc:id="e3224738-d28b-433f-9670-0a4da85c9fb1" variableName="List"/>
+			<logger level="INFO" doc:name="Logger" doc:id="8ceb42c3-4146-418a-b202-fc61e34d87ff" message="#[vars.value]"/>
+		</foreach>
+		
+	</flow>
+</mule>

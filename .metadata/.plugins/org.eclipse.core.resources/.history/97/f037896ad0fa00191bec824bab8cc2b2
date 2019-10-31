@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="ea269eb4-576a-4e95-9cc8-3bb7e57ef05a" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="pmducuet@gmail.com" password="Anhduc@123" >
+			<pooling-profile />
+			<email:properties > 
+				<email:property key="mail.smtp.starttls.enable" value="true" /> 
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="93e486f8-e5e3-4635-b53e-edfa55e2bbd6" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="demoFlow" doc:id="1fc4482b-aa82-4a21-afb5-826290bb5c78" >
+		<http:listener doc:name="Listener" doc:id="c5ea8b6e-18cb-4e18-b59b-0c8b54ea2f52" config-ref="HTTP_Listener_config" path="/gmail/{message}" outputMimeType='application/json' allowedMethods="POST">
+			<http:response statusCode="200">
+			</http:response>
+			<http:error-response statusCode="500">
+				<http:body ><![CDATA[#[payload]]]></http:body>
+			</http:error-response>
+		</http:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="96c2487c-b723-4fc2-b3d4-2602416effc6" message="#[payload]"/>
+		<set-payload doc:name="Set Payload" doc:id="5ef161b2-f5cb-4396-ae3d-1cc67d0cf372" value="#[payload]" mimeType="application/x-www-form-urlencoded"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9deabe0b-00bd-4d2b-97e1-875009dcecc2" message="#[output application/java
+---
+message.payload]"/>
+		<email:send doc:name="Send" doc:id="a5eedcae-c882-4060-ab3a-79ea62420186" config-ref="Email_SMTP" fromAddress="pmducuet@gmail.com" subject="[Messenger Facebook]">
+			<email:to-addresses >
+				<email:to-address value="duchuy0990@gmail.com" />
+			</email:to-addresses>
+			<email:body contentType="text/plain" >
+				<email:content ><![CDATA[#[output application/java
+---
+payload.message]]]></email:content>
+			</email:body>
+		</email:send>
+	</flow>
+</mule>

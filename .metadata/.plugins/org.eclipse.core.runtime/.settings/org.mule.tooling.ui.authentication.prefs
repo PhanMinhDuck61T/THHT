@@ -1,0 +1,5 @@
+authenticated.users=[{"id"\:"0facb738-640b-4955-9559-05a1527dbb25","token"\:"c9c74ee6-2062-42d8-99d1-25819bf85abb","userId"\:"Phanduc88","refreshToken"\:"","baseUrl"\:"https\://anypoint.mulesoft.com/"},{"id"\:"4740546f-b529-4ed9-beac-662f6671555f","token"\:"ee1aa0f1-1237-4487-920d-d8db7c630d5f","userId"\:"Phanduc98","refreshToken"\:"","baseUrl"\:"https\://anypoint.mulesoft.com/"}]
+current.token=ee1aa0f1-1237-4487-920d-d8db7c630d5f
+current.user=Phanduc98
+eclipse.preferences.version=1
+org.mule.tooling.amc.apps={"userProjectMap"\:{"Phanduc98"\:{"demo"\:"{\\"applicationName\\"\:\\"gmail\\",\\"muleRuntime\\"\:\\"4.2.1\\",\\"properties\\"\:{}}"}}}

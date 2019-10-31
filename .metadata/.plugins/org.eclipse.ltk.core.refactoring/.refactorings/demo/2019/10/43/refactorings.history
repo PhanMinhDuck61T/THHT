@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;demo/src/main/mule/demo.xml&apos; to &apos;sendMail.xml&apos;" description="Rename resource &apos;demo.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/mule/demo.xml" name="sendMail.xml" stamp="1571838800753" updateReferences="true"/>
+</session>
